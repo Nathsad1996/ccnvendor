@@ -7,21 +7,13 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row class="mb-2 d-flex justify-center" >
-      <v-col  lg="6" md="8" cols="11">
-        <v-card rounded="lg" class="pt-3 pb-3 pl-3 pr-3">
-          <v-card-title
-            class="
-              d-flex
-              justify-center
-              text-center text-lg-h4 text-md-h4 text-md-h6
-            "
-            >les informations du produit</v-card-title
-          >
-          <v-divider></v-divider>
-          &nbsp;
-          <v-form>
+    <v-row class="mx-auto">
+      <v-col lg="6" md="6" cols="12">
+        <v-card rounded="xl">
+          <v-card-title class="text-h4"> Détails du produit </v-card-title>
+          <v-card-text>
             <v-text-field
+              rounded
               dense
               outlined
               label="Veuillez saisir le nom"
@@ -31,6 +23,7 @@
               outlined
             ></v-textarea>
             <v-file-input
+              rounded
               accept="image/png, image/jpeg, image/bmp, image/svg"
               label="Veuillez selectionner les photos"
               v-model="files"
@@ -50,25 +43,40 @@
                 </span>
               </template>
             </v-file-input>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col lg="6" md="6" cols="12">
+        <v-card rounded="xl" class="pb-10">
+          <v-card-title class="text-h4">
+            Prix et options du produit
+          </v-card-title>
+          <v-card-text>
             <v-text-field
+              rounded
               dense
               outlined
               label="Veuillez saisir le prix de vente"
+              type="number"
             ></v-text-field>
             <v-text-field
+              rounded
               dense
               outlined
               label="Veuillez saisir le prix pour avec une reduction (optionnelle)"
+              type="number"
             ></v-text-field>
             <v-text-field
+              rounded
               dense
               outlined
               label="Veuillez saisir quantité disponible"
+              type="number"
             ></v-text-field>
             <v-checkbox
               dense
               v-model="checkbox"
-              label="Ce produit est disponible en plusieurs option(version, taille)"
+              label="Ce produit est disponible en plusieurs options(version, taille)"
               @change="initArray"
             ></v-checkbox>
             <v-alert v-if="checkbox" type="info" dense
@@ -80,6 +88,7 @@
               :key="i"
             >
               <v-text-field
+                rounded
                 v-model="option.title"
                 outlined
                 dense
@@ -87,6 +96,7 @@
               ></v-text-field>
               &nbsp;
               <v-text-field
+                rounded
                 v-model="option.description"
                 outlined
                 dense
@@ -106,11 +116,15 @@
             >
               <v-icon>mdi-plus</v-icon> Ajouter une option
             </v-btn>
-          </v-form>
-          <v-card-actions class="mt-3">
-            <v-btn block large rounded color="success" @click="addProduct">Ajouter</v-btn>
-          </v-card-actions>
+          </v-card-text>
         </v-card>
+      </v-col>
+    </v-row>
+    <v-row class="mb-2 d-flex justify-center">
+      <v-col lg="6" md="8" cols="12">
+        <v-btn block large rounded color="success" @click="addProduct"
+          >Ajouter le produit
+        </v-btn>
       </v-col>
     </v-row>
   </div>
@@ -124,7 +138,7 @@ export default {
     checkbox: false,
     options: [],
     filelist: [],
-    files: []
+    files: [],
   }),
   methods: {
     previous() {
@@ -146,9 +160,9 @@ export default {
         this.checkbox = false;
       }
     },
-    addProduct(){
+    addProduct() {
       console.log(this.files.length);
-    }
+    },
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
