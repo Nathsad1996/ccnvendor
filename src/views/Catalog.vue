@@ -13,8 +13,60 @@
           :headers="headers"
           :items="desserts"
           :items-per-page="5"
+          :search="search"
           class="elevation-1"
-        ></v-data-table>
+        >
+          <template v-slot:top>
+            <v-text-field
+              outlined
+              dense
+              rounded
+              v-model="search"
+              label="Rechercher un produit"
+              class="mx-4 pt-6"
+              clearable
+            ></v-text-field>
+
+            <v-dialog v-model="dialogDelete" max-width="600px">
+              <v-card>
+                <v-card-title class="text-h5 d-flex justify-center"
+                  >Voulez vous supprimer ce produit?</v-card-title
+                >
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="closeDialog"
+                    >Annuler</v-btn
+                  >
+                  <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                    >Oui</v-btn
+                  >
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+            <v-dialog v-model="dialog" max-width="900px">
+              <v-card>
+                <v-card-title>{{ title }}</v-card-title>
+                <v-card-actions>
+                  <v-btn text @click="closeDialog">Annuler</v-btn>
+                  <v-btn text @click="save">Sauvegarder</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+
+          <template v-slot:item.actions="{ item }">
+            <v-icon color="success" class="mr-2" @click="editItem(item)">
+              mdi-pencil
+            </v-icon>
+            <v-icon color="red" class="mr-2" @click="deleteItem(item)">
+              mdi-delete
+            </v-icon>
+            <v-icon color="info" @click="infoItem(item)">
+              mdi-information
+            </v-icon>
+          </template>
+        </v-data-table>
       </v-col>
     </v-row>
   </div>
@@ -24,6 +76,12 @@
 export default {
   data: () => ({
     previousRoute: null,
+    item: {},
+    search: "",
+    dialogDelete: false,
+    dialog: false,
+    title: "",
+    defaultItem: {},
     headers: [
       {
         text: "Dessert (100g serving)",
@@ -36,6 +94,7 @@ export default {
       { text: "Carbs (g)", value: "carbs" },
       { text: "Protein (g)", value: "protein" },
       { text: "Iron (%)", value: "iron" },
+      { text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [
       {
@@ -124,6 +183,43 @@ export default {
     previous() {
       this.$router.push(this.previousRoute);
     },
+    editItem(item) {
+      this.item = this.desserts.indexOf(item);
+      this.title = "Editer un produit";
+      this.item = Object.assign({}, item);
+      this.dialog = true;
+      console.log(item);
+    },
+    deleteItem(item) {
+      this.item = this.desserts.indexOf(item);
+      this.item = Object.assign({}, item);
+      this.dialogDelete = true;
+      console.log(item);
+    },
+    infoItem(item) {
+      this.item = this.desserts.indexOf(item);
+      this.title = "Information sur le produit";
+      this.item = Object.assign({}, item);
+      this.dialog = true;
+      console.log(item);
+    },
+    deleteItemConfirm() {
+      const editedIndex = this.desserts.indexOf(this.item);
+      this.desserts.splice(editedIndex, 1);
+      this.closeDelete();
+      console.log("Item deleted!");
+    },
+    closeDialog() {
+      this.desserts.splice(this.item, 1);
+      this.closeDelete();
+    },
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.item = Object.assign({}, this.defaultItem);
+      });
+    },
+    save() {},
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {

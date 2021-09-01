@@ -7,11 +7,15 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row class="mb-2">
-      <v-col offset-lg="3" lg="6" md="6" cols="12">
+    <v-row class="mb-2 d-flex justify-center" >
+      <v-col  lg="6" md="8" cols="11">
         <v-card rounded="lg" class="pt-3 pb-3 pl-3 pr-3">
           <v-card-title
-            class="d-flex justify-center text-center text-lg-h4 text-md-h4 text-md-h6"
+            class="
+              d-flex
+              justify-center
+              text-center text-lg-h4 text-md-h4 text-md-h6
+            "
             >les informations du produit</v-card-title
           >
           <v-divider></v-divider>
@@ -27,16 +31,25 @@
               outlined
             ></v-textarea>
             <v-file-input
-              :rules="rules"
               accept="image/png, image/jpeg, image/bmp, image/svg"
-              label="Veuillez uploader un fichier"
+              label="Veuillez selectionner les photos"
               v-model="files"
               multiple
               chips
               outlined
               dense
               clearable
-            ></v-file-input>
+              :show-size="true"
+            >
+              <template v-slot:selection="{ index, text }">
+                <v-chip v-if="index < 2" small label color="primary">
+                  {{ text }}
+                </v-chip>
+                <span v-else-if="index === 2">
+                  +{{ files.length - 2 }} File(s)
+                </span>
+              </template>
+            </v-file-input>
             <v-text-field
               dense
               outlined
@@ -95,7 +108,7 @@
             </v-btn>
           </v-form>
           <v-card-actions class="mt-3">
-            <v-btn block rounded color="success">Ajouter</v-btn>
+            <v-btn block large rounded color="success" @click="addProduct">Ajouter</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -111,11 +124,7 @@ export default {
     checkbox: false,
     options: [],
     filelist: [],
-    files: [],
-    rules: [
-      (value) =>
-        !value || value.size < 2000000 || "la photo ne doit pas depasser 2 Mo!",
-    ],
+    files: []
   }),
   methods: {
     previous() {
@@ -137,6 +146,9 @@ export default {
         this.checkbox = false;
       }
     },
+    addProduct(){
+      console.log(this.files.length);
+    }
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
