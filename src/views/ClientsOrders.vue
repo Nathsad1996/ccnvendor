@@ -17,10 +17,10 @@
         >
           <template v-slot:item.actions="{ item }">
             <v-icon color="success" class="mr-2" @click="editItem(item)">
-              mdi-pencil
+              mdi-check-bold
             </v-icon>
             <v-icon color="red" class="mr-2" @click="deleteItem(item)">
-              mdi-delete
+              mdi-close-thick
             </v-icon>
             <v-icon color="info" @click="infoItem(item)">
               mdi-information
