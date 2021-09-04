@@ -13,28 +13,22 @@
     </v-btn>
 
     <v-btn icon text v-show="isLogin">
-    <v-icon class="ml-1" color="red" @click="logout"> mdi-logout </v-icon>
+      <v-icon class="ml-1" color="red" @click="logout"> mdi-logout </v-icon>
     </v-btn>
-
-
   </v-app-bar>
 </template>
 <script>
-import { mapState } from 'vuex';
 export default {
   data: () => ({}),
   methods: {
     goHome() {
       this.$router.push("/");
     },
-    goShop(){},
-    logout(){
-      this.isLogin = false;
+    goShop() {},
+    logout() {
+      window.sessionStorage.clear();
       location.reload();
-    }
-  },
-  computed: {
-    ...mapState(["isLogin"])
+    },
   },
 };
 </script>
