@@ -60,7 +60,9 @@ export default {
   }),
   methods: {
     ...mapActions(["setLoginAction"]),
-    NewSupplier() {},
+    NewSupplier() {
+      this.$router.push("/new-supplier");
+    },
     AccountReset() {},
     loginSupplier() {
         this.setLoginAction(true);

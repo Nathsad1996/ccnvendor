@@ -359,15 +359,13 @@ export default {
     });
   },
   methods: {
-    ...mapActions(["setRegistry"]),
+    ...mapActions(["setLoginAction"]),
     previous() {
-      this.setRegistry(false);
+      this.setLoginAction(false);
       this.$router.push(this.previousRoute.path);
     },
     createAccount() {
-      this.setRegistry(false);
-      console.log("creation du compte");
-      this.$router.push(this.previousRoute.path);
+      this.setLoginAction(true);
     },
   },
 };

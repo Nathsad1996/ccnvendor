@@ -33,6 +33,7 @@
 </template>
 
 <script>
+
 export default {
   data: () => ({
     previousRoute: null,
@@ -65,10 +66,16 @@ export default {
       this.$router.push(this.previousRoute);
     },
   },
+  computed: {
+  },
   beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      vm.previousRoute = from;
-    });
+    if (this.$store.state.isLogin === false) {
+      this.$router.push("/login");
+    } else {
+      next((vm) => {
+        vm.previousRoute = from;
+      });
+    }
   },
 };
 </script>

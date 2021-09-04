@@ -94,7 +94,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+  },
+  beforeRouteEnter(to, from, next){
+    if(this.$store.state.isLogin === false){
+      this.$router.push('/login')
+    }else{
+      next()
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

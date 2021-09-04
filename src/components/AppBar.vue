@@ -13,7 +13,7 @@
     </v-btn>
 
     <v-btn icon text v-show="isLogin">
-    <v-icon class="ml-1" color="red"> mdi-logout </v-icon>
+    <v-icon class="ml-1" color="red" @click="logout"> mdi-logout </v-icon>
     </v-btn>
 
 
@@ -27,7 +27,11 @@ export default {
     goHome() {
       this.$router.push("/");
     },
-    goShop(){}
+    goShop(){},
+    logout(){
+      this.isLogin = false;
+      location.reload();
+    }
   },
   computed: {
     ...mapState(["isLogin"])

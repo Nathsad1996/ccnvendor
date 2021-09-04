@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from "../store/index"
 
 Vue.use(VueRouter)
 
@@ -34,6 +33,11 @@ const routes = [
     path: "/account",
     name: "Account",
     component: () => import(/* WebpackChunkName: "account" */ '../views/Account.vue')
+  },
+  {
+    path: "/new-supplier",
+    name: "NewSupplier",
+    component: () => import(/* WebpackChunkName: "new supplier" */ '../views/NewSupplier.vue')
   }
 ]
 
@@ -43,14 +47,6 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (store.getters.login === false && to.path != "/login") {
-    next("/login")
-  }
-  else {
-    next();
-  }
-})
 
 
 
