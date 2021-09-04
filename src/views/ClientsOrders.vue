@@ -15,14 +15,39 @@
           :items-per-page="5"
           class="elevation-1"
         >
+          <template v-slot:top>
+            <v-dialog v-model="dialogOrder" max-width="600px">
+              <v-card>
+                <v-card-title class="text-h5 d-flex justify-center"
+                  >Détail de la commande</v-card-title
+                >
+                <v-card-actions class="d-flex justify-center">
+                  <v-btn color="blue darken-1" text @click="closeDialog"
+                    >FERMER</v-btn
+                  >
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+
           <template v-slot:item.actions="{ item }">
-            <v-icon color="success" class="mr-2" @click="editItem(item)">
+            <v-icon
+              color="success"
+              v-show="item.status === 'confirmed' || item.status === 'pending'"
+              class="mr-2"
+              @click="confirmOrder(item)"
+            >
               mdi-check-bold
             </v-icon>
-            <v-icon color="red" class="mr-2" @click="deleteItem(item)">
+            <v-icon
+              color="red"
+              v-show="item.status === 'rejected' || item.status === 'pending'"
+              class="mr-2"
+              @click="rejectOrder(item)"
+            >
               mdi-close-thick
             </v-icon>
-            <v-icon color="info" @click="infoItem(item)">
+            <v-icon color="info" @click="OrderInfo(item)">
               mdi-information
             </v-icon>
           </template>
@@ -33,10 +58,14 @@
 </template>
 
 <script>
+import store from "../store/index";
+import router from "../router/index";
 
 export default {
   data: () => ({
     previousRoute: null,
+    infoOrder: {},
+    dialogOrder: false,
     headers: [
       {
         text: "Dessert (100g serving)",
@@ -46,18 +75,26 @@ export default {
       },
       { text: "Calories", value: "calories" },
       { text: "Fat (g)", value: "fat" },
-      { text: "Actions", value: "actions", sortable: false },
+      { text: "Status Commande", value: "actions", sortable: false },
     ],
     desserts: [
       {
         name: "Frozen Yogurt",
         calories: 159,
         fat: 6.0,
+        status: "rejected",
       },
       {
         name: "Ice cream sandwich",
         calories: 237,
         fat: 9.0,
+        status: "confirmed",
+      },
+      {
+        name: "Ice cream sandwich",
+        calories: 237,
+        fat: 9.0,
+        status: "pending",
       },
     ],
   }),
@@ -65,12 +102,30 @@ export default {
     previous() {
       this.$router.push(this.previousRoute);
     },
+    confirmOrder(item) {
+      if (item.status === "pending") {
+        item.status = "confirmed";
+        console.log(item);
+      }
+    },
+    rejectOrder(item) {
+      if (item.status === "pending") {
+        item.status = "rejected";
+        console.log(item);
+      }
+    },
+    OrderInfo(item) {
+      this.dialogOrder = true;
+      console.log(item);
+    },
+    closeDialog() {
+      this.dialogOrder = false;
+    },
   },
-  computed: {
-  },
+  computed: {},
   beforeRouteEnter(to, from, next) {
-    if (this.$store.state.isLogin === false) {
-      this.$router.push("/login");
+    if (store.state.isLogin === false) {
+      router.push("/login");
     } else {
       next((vm) => {
         vm.previousRoute = from;
@@ -80,4 +135,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.confirmed {
+  color: greenyellow;
+}
+
+.rejected {
+  color: crimson;
+}
+</style>

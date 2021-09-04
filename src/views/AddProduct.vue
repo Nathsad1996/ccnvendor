@@ -131,6 +131,9 @@
 </template>
 
 <script>
+import store from "../store/index"
+import router from "../router/index"
+
 export default {
   delimiters: ["${", "}"],
   data: () => ({
@@ -167,8 +170,8 @@ export default {
   computed: {
   },
   beforeRouteEnter(to, from, next) {
-    if (this.$store.state.isLogin === false) {
-      this.$router.push("/login");
+    if (store.state.isLogin === false) {
+      router.push("/login");
     } else {
       next((vm) => {
         vm.previousRoute = from;

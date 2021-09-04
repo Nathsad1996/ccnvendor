@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-row class="mx-auto">
+    <v-row class="mx-auto mt-1">
       <v-col>
-        <p class="text-lg-h3 text-sm-h1 text-center">
+        <p class="text-lg-h3 text-sm-h3 text-center">
           Bienvenu dans la page d'enregistrement pour fournisseur
         </p>
       </v-col>
