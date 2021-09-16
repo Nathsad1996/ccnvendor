@@ -22,6 +22,9 @@
               label="Veuillez saisir une description"
               outlined
             ></v-textarea>
+            <v-select clearable dense :items="categories" label="Selectionner une catégorie" outlined rounded>
+
+            </v-select>
             <v-file-input
               rounded
               accept="image/png, image/jpeg, image/bmp, image/svg"
@@ -142,6 +145,7 @@ export default {
     options: [],
     filelist: [],
     files: [],
+    categories: ["Habits", "TV"]
   }),
   methods: {
     previous() {
