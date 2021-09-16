@@ -18,6 +18,7 @@
   </v-app-bar>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
   data: () => ({}),
   methods: {
@@ -30,5 +31,8 @@ export default {
       location.reload();
     },
   },
+  computed: {
+    ...mapState(["isLogin"])
+  }
 };
 </script>

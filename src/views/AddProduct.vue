@@ -22,8 +22,14 @@
               label="Veuillez saisir une description"
               outlined
             ></v-textarea>
-            <v-select clearable dense :items="categories" label="Selectionner une catégorie" outlined rounded>
-
+            <v-select
+              clearable
+              dense
+              :items="categories"
+              label="Selectionner une catégorie"
+              outlined
+              rounded
+            >
             </v-select>
             <v-file-input
               rounded
@@ -134,8 +140,8 @@
 </template>
 
 <script>
-import store from "../store/index"
-import router from "../router/index"
+import store from "../store/index";
+import router from "../router/index";
 
 export default {
   delimiters: ["${", "}"],
@@ -145,7 +151,7 @@ export default {
     options: [],
     filelist: [],
     files: [],
-    categories: ["Habits", "TV"]
+    categories: ["Habits", "TV"],
   }),
   methods: {
     previous() {
@@ -171,8 +177,7 @@ export default {
       console.log(this.files.length);
     },
   },
-  computed: {
-  },
+  computed: {},
   beforeRouteEnter(to, from, next) {
     if (store.state.isLogin === false) {
       router.push("/login");
