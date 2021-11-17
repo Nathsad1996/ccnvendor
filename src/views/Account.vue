@@ -3,12 +3,27 @@
     <v-row class="mx-auto mt-1">
       <v-col class="float-left" cols="1">
         <v-btn icon @click="previous">
-          <v-icon size="40"> mdi-arrow-left </v-icon>
+          <v-icon size="40">mdi-arrow-left</v-icon>
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col> account </v-col>
+    <v-row class="mx-auto">
+      <v-col class="d-flex justify-center">
+        <v-tabs v-model="tab" center-active centered>
+          <v-tab>Réclamations</v-tab>
+          <v-tab>Informations du compte</v-tab>
+        </v-tabs>
+      </v-col>
+    </v-row>
+    <v-row class="mx-auto">
+      <v-col class="d-flex justify-center">
+        <v-col>
+          <v-tabs-items v-model="tab">
+            <v-tab-item>Reclamations</v-tab-item>
+            <v-tab-item>Infos compte</v-tab-item>
+          </v-tabs-items>
+        </v-col>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -19,6 +34,7 @@ import router from "../router/index"
 export default {
   data: () => ({
     previousRoute: null,
+    tab: null
   }),
   methods: {
     previous() {

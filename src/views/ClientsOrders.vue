@@ -8,6 +8,11 @@
       </v-col>
     </v-row>
     <v-row class="mx-auto">
+      <v-col class="d-flex justify-center text-h3">
+        Les commandes des clients
+      </v-col>
+    </v-row>
+    <v-row class="mx-auto">
       <v-col>
         <v-data-table
           :headers="headers"

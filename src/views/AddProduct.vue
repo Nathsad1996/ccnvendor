@@ -8,6 +8,11 @@
       </v-col>
     </v-row>
     <v-row class="mx-auto">
+      <v-col class="d-flex justify-center text-h3">
+        Saisir les détails du produit
+      </v-col>
+    </v-row>
+    <v-row class="mx-auto">
       <v-col lg="6" md="6" cols="12">
         <v-card rounded="xl">
           <v-card-title class="text-h4"> Détails du produit </v-card-title>
